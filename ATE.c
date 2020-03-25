@@ -32,7 +32,8 @@ typedef struct Node{
  * Function headers
  */
 void insertText(NODEPTR *ptr, char* value);
-NODEPTR search(NODEPTR *ptr, char* value);
+int search(NODEPTR ptr, char* value);
+int empty(NODEPTR ptr);
 void print();
 void insertContent(int pos);
 void clear(int start, int end);
@@ -89,9 +90,31 @@ void insertText(NODEPTR *ptr, char* value){
 }
 
 /*
- * Function that allows you to search for a piece of text in the list.
+ * Function that searches for the received node via argument and returns
+ * 1 if it has found and 0 if it has not found it.
  */
-//NODEPTR search(NODEPTR *ptr, char* value){}
+int search(NODEPTR ptr, char* value){
+	NODEPTR currentPtr = ptr;
+	if(empty(ptr)){
+		return 0;
+	}
+	while(currentPtr != NULL && strcmp(&currentPtr->data, value)){
+		currentPtr = currentPtr->next;
+	}
+	if(currentPtr != NULL){
+		return 1;
+	}
+	else{
+		return 0;
+	}
+}
+
+/*
+ * Function that returns 1 if the list is empty and 0 if it is not.
+ */
+int empty(NODEPTR ptr){
+	return ptr == NULL;
+}
 
 /*
  * Function that allows the list contents to be printed on screen.
