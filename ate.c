@@ -31,26 +31,26 @@ typedef struct Node{
 /*
  * Function headers
  */
-void insertText(NODEPTR *ptr, char* value);
-int search(NODEPTR ptr, char* value);
-int empty(NODEPTR ptr);
-void print();
-void insertContent(int pos);
+// int search(NODEPTR ptr, char* value);
+// int empty(NODEPTR ptr);
+// void insertContent(int pos);
+// void saveToFile(char* name);
+// void loadFile();
+
+void menu(NODEPTR *List);
 void clear(int start, int end);
-void saveToFile(char* name);
-void loadFile();
-void menu();
+void insertText(NODEPTR *ptr, char* value);
+int editText(NODEPTR *List, char* value);
+int print(NODEPTR *start);
+char *getln();
 
 /*
  * Main program
  */
 int main(int argc, char* argv[]){
 	NODEPTR *List = malloc(sizeof(NODEPTR));
-	
-	/*
-	 * Code block that checks the number of arguments entered by the
-	 * command line and fills the list with those arguments.
-	 */
+	printf("\n\n\n %s \n\n\n", argv);
+
 	if(argc != 1){
 		int args = argc-1, aux=1;
 		while(args != 0){
@@ -59,18 +59,19 @@ int main(int argc, char* argv[]){
 			aux++;
 		}
 		insertText(List, " ");
+		menu(List);
 	}
 	else{
-		//TODO: needs to think a little bit of it and implement it
-	}
+		printf("Incorrect usage\n\n");
+	}		
+	
 
-	printf("ATE esta rodando...");
+	printf("ATE esta rodando...\n\n");
 	return 0;
 }
 
 /*
- * Function that allows the insertion of text in the list given a
- * position as a starting point.
+ * Allows the insertion of text in the list
  */
 void insertText(NODEPTR *ptr, char* value){
 	NODEPTR newPtr;
@@ -91,24 +92,133 @@ void insertText(NODEPTR *ptr, char* value){
 	}
 }
 
+
+/*
+ * Function that prints a menu of options on the screen.
+ */
+void menu(NODEPTR *List){
+	//TODO: needs to think a little bit of it and implement it
+	int option = 0;
+	char info;
+	do{
+		printf("\n AWFUL TEXT EDITOR \n\n");
+		printf("Main Menu:\n");
+		printf("1- Insert Text\n");
+		printf("2- Edit Text\n");
+		printf("3- Delete Text\n");
+		printf("4- Print Content\n\n");
+		scanf("%d", &option);
+
+		switch(option){
+			case 1: 
+				// insertText();
+				printf("Dado para insercao na lista: ");
+				// info = getln();
+				// insertText(&&List, &info);
+				break;
+			case 2: 
+				printf("Selecionou opcao %d\n", option);
+				break;
+			case 3: 
+				printf("Selecionou opcao %d\n", option);
+				break;
+			case 4: 
+				printf("Selecionou opcao %d\n", option);
+				print(List);
+				break;
+			case 9: 
+				printf("Selecionou opcao %d\n", option);
+				return;
+				break;
+		}
+
+	} while(option != 9);
+}
+
+/*
+ * Function that allows the list contents to be printed on screen.
+ */
+int print(NODEPTR *start){
+	printf("Executou print \n\n");
+
+	if (*start == NULL){
+		return 1;  /* lista vazia */
+	}
+	printf("LISTA ::  ");
+
+	while (*start != NULL) {
+		printf("%d  ", (*start)->data);
+		*start = (*start)->next;
+	}
+
+	printf("\nChegou no final da func \n\n");
+	return 0;
+}
+
+/*
+ * Function that clears the entire list, deallocating pointers and
+ * memory.
+ */
+void clear(int start, int end){
+	//TODO: needs to think a little bit of it and implement it
+}
+
+int editText(NODEPTR *ptr, char* value){
+	//TODO: Choose a position on the list and edit the content
+}
+
+// char *getln(){
+//     char *line = NULL, *tmp = NULL;
+//     size_t size = 0, index = 0;
+//     int ch = EOF;
+
+//     while (ch) {
+//         ch = getc(stdin);
+
+//         /* Check if we need to stop. */
+//         if (ch == EOF || ch == '\n')
+//             ch = 0;
+
+//         /* Check if we need to expand. */
+//         if (size <= index) {
+//             size += CHUNK;
+//             tmp = realloc(line, size);
+//             if (!tmp) {
+//                 free(line);
+//                 line = NULL;
+//                 break;
+//             }
+//             line = tmp;
+//         }
+
+//         /* Actually store the thing. */
+//         line[index++] = ch;
+//     }
+
+//     return line;
+// }
+
+
+/* ******************************* To Be Implemented Later ******************************* */
+
 /*
  * Function that searches for the received node via argument and returns
  * 1 if it has found and 0 if it has not found it.
  */
 int search(NODEPTR ptr, char* value){
-	NODEPTR currentPtr = ptr;
-	if(empty(ptr)){
-		return 0;
-	}
-	while(currentPtr != NULL && strcmp(&currentPtr->data, value)){
-		currentPtr = currentPtr->next;
-	}
-	if(currentPtr != NULL){
-		return 1;
-	}
-	else{
-		return 0;
-	}
+	// NODEPTR currentPtr = ptr;
+	// if(empty(ptr)){
+	// 	return 0;
+	// }
+	// while(currentPtr != NULL && strcmp(&currentPtr->data, value)){
+	// 	currentPtr = currentPtr->next;
+	// }
+	// if(currentPtr != NULL){
+	// 	return 1;
+	// }
+	// else{
+	// 	return 0;
+	// }
 }
 
 /*
@@ -119,24 +229,9 @@ int empty(NODEPTR ptr){
 }
 
 /*
- * Function that allows the list contents to be printed on screen.
- */
-void print(){
-	//TODO: needs to think a little bit of it and implement it
-}
-
-/*
  * ?
  */
 void insertContent(int pos){
-	//TODO: needs to think a little bit of it and implement it
-}
-
-/*
- * Function that clears the entire list, deallocating pointers and
- * memory.
- */
-void clear(int start, int end){
 	//TODO: needs to think a little bit of it and implement it
 }
 
@@ -153,12 +248,5 @@ void saveToFile(char* name){
  * extension).
  */
 void loadFile(){
-	//TODO: needs to think a little bit of it and implement it
-}
-
-/*
- * Function that prints a menu of options on the screen.
- */
-void menu(){
 	//TODO: needs to think a little bit of it and implement it
 }
