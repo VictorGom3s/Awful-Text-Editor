@@ -49,7 +49,7 @@ char *getln();
  */
 int main(int argc, char* argv[]){
 	NODEPTR *List = malloc(sizeof(NODEPTR));
-	printf("\n\n\n %s \n\n\n", argv);
+	//printf("\n\n\n %s \n\n\n", argv); //argv é vetor, precisa ser acessado internamente antes de ser impresso
 
 	if(argc != 1){
 		int args = argc-1, aux=1;
@@ -99,7 +99,7 @@ void insertText(NODEPTR *ptr, char* value){
 void menu(NODEPTR *List){
 	//TODO: needs to think a little bit of it and implement it
 	int option = 0;
-	char info;
+	//char info; //variável não usada
 	do{
 		printf("\n AWFUL TEXT EDITOR \n\n");
 		printf("Main Menu:\n");
@@ -147,7 +147,12 @@ int print(NODEPTR *start){
 	printf("LISTA ::  ");
 
 	while (*start != NULL) {
-		printf("%d  ", (*start)->data);
+		//printf("%c  ", (*start)->data);
+		int i = 0;
+		while(!strcmp(&start->data, "\0")){
+			printf("%c", (*start)->data[i]);
+			i++;
+		}
 		*start = (*start)->next;
 	}
 
@@ -164,6 +169,7 @@ void clear(int start, int end){
 }
 
 int editText(NODEPTR *ptr, char* value){
+	return 0; //precisa retornar inteiro
 	//TODO: Choose a position on the list and edit the content
 }
 
@@ -206,6 +212,7 @@ int editText(NODEPTR *ptr, char* value){
  * 1 if it has found and 0 if it has not found it.
  */
 int search(NODEPTR ptr, char* value){
+	return 0; //precisa retornar inteiro
 	// NODEPTR currentPtr = ptr;
 	// if(empty(ptr)){
 	// 	return 0;
