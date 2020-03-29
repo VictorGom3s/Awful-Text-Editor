@@ -25,83 +25,79 @@
  */
 typedef struct Node{
 	char data;
-	struct Node* next;
-} *NODEPTR;
+	struct Node *next;
+} NODEPTR;
 
 /*
  * Function headers
  */
-// int search(NODEPTR ptr, char* value);
-// int empty(NODEPTR ptr);
-// void insertContent(int pos);
-// void saveToFile(char* name);
-// void loadFile();
+void menu(NODEPTR **List);
+void clear(int **start, int end);
+void insertText(NODEPTR **start, char *value);
+int editText(NODEPTR **start, char* value);
+int print(NODEPTR *start);
+int insertAtTheEnd(NODEPTR **start, char info);
+int initList(NODEPTR **start);
+int empty(NODEPTR **start);
 
-void menu(NODEPTR *List);
-void clear(int start, int end);
-void insertText(NODEPTR *ptr, char* value);
-int editText(NODEPTR *List, char* value);
-int print(NODEPTR start);
-char *getln();
+/* ****************************************************************************************** */
 
-/*
- * Main program
- */
 int main(int argc, char* argv[]){
-	NODEPTR *List = malloc(sizeof(NODEPTR));
+	NODEPTR *List;
 
-		printf("num de args: %d \n\n", argc);
+	int erro = initList(&List);
+	if(erro != 0){
+		printf("Erro na inicialização!\n\n");
+		exit(1);
+	}	
+
 	if(argc != 1){
 		int args = argc-1, aux=1;
-		while(args != 0){
-			printf("arg: %s \n\n", argv[1]);
-			insertText(List, argv[aux]);
+		while(args > 0){
+			insertText(&List, argv[aux]);
 			args--;
 			aux++;
 		}
-		insertText(List, " ");
-		menu(List);
+		menu(&List);
 	}
 	else{
 		printf("Incorrect usage\n\n");
-	}		
-	
-
-	printf("ATE esta rodando...\n\n");
+	}			
 	return 0;
 }
+
+/* ****************************************************************************************** */
+int initList (NODEPTR **start){
+	*start = NULL;
+	return 0; /* sem erro */
+}
+
+/* ****************************************************************************************** */
 
 /*
  * Allows the insertion of text in the list
  */
-void insertText(NODEPTR *ptr, char* value){
-	NODEPTR newPtr;
-	printf("insertText: %s \n", value);
-	newPtr = malloc(sizeof(NODEPTR));
-	
-	/*
-	 * Code block that allocates a new node and fills it with the
-	 * arguments received.
-	 */
-	if(newPtr != NULL){
-		strcpy(&newPtr->data, value);
-		newPtr->next = NULL;
-		newPtr->next = *ptr;
-		*ptr = newPtr;
+void insertText(NODEPTR **start, char *value){
+	int i;
+	int erro;
+	for (i = 0; value[i] != '\0'; ++i){    
+		erro = insertAtTheEnd(start, value[i]);
+		if(erro > 0){
+			printf("Erro ao inserir caracter.\n\n");
+		}
 	}
-	else{
-		exit(EXIT_FAILURE);
-	}
+	char space = ' ';
+	insertAtTheEnd(start, space);
 }
 
+/* ****************************************************************************************** */
 
 /*
  * Function that prints a menu of options on the screen.
  */
-void menu(NODEPTR *List){
+void menu(NODEPTR **List){
 	//TODO: needs to think a little bit of it and implement it
 	int option = 0;
-	//char info; //variável não usada
 	do{
 		printf("\n AWFUL TEXT EDITOR \n\n");
 		printf("Main Menu:\n");
@@ -113,95 +109,82 @@ void menu(NODEPTR *List){
 
 		switch(option){
 			case 1: 
-				// insertText();
-				printf("Dado para insercao na lista: ");
-				// info = getln();
-				// insertText(&&List, &info);
+				printf("Selecionou opcao %d\n\n", option);
 				break;
 			case 2: 
-				printf("Selecionou opcao %d\n", option);
+				printf("Selecionou opcao %d\n\n", option);
 				break;
 			case 3: 
-				printf("Selecionou opcao %d\n", option);
+				printf("Selecionou opcao %d\n\n", option);
 				break;
 			case 4: 
-				printf("Selecionou opcao %d\n", option);
+				printf("Selecionou opcao %d\n\n", option);
 				print(*List);
 				break;
 			case 9: 
-				printf("Selecionou opcao %d\n", option);
+				printf("Selecionou opcao %d\n\n", option);
 				return;
 				break;
 		}
-
+		getchar(); /* limpa buffer */
 	} while(option != 9);
 }
 
-/*
- * Function that allows the list contents to be printed on screen.
- */
-int print(NODEPTR start){
-	printf("Executou print \n\n");
+/* ****************************************************************************************** */
 
+/* Allows the list content to be printed on screen. */
+int print(NODEPTR *start){
 	if (start == NULL){
+		printf("Lista vazia\n\n");
 		return 1;  /* lista vazia */
 	}
-	printf("LISTA ::  ");
-//  && !strcmp((*start)->data, "\0"
+	printf("Content ::::>  ");
 	while (start != NULL) {
-
 		printf("%c", start->data);		
 		start = start->next;
 	}
-
-	printf("\nChegou no final da func \n\n");
+	printf(" <::::\n\n");
 	return 0;
 }
 
-/*
- * Function that clears the entire list, deallocating pointers and
- * memory.
- */
-void clear(int start, int end){
+/* ****************************************************************************************** */
+
+/* clears the entire list, deallocating pointers and memory. */
+void clear(int **start, int end){
 	//TODO: needs to think a little bit of it and implement it
 }
 
-int editText(NODEPTR *ptr, char* value){
+/* ****************************************************************************************** */
+
+int editText(NODEPTR **start, char* value){
 	return 0; //precisa retornar inteiro
 	//TODO: Choose a position on the list and edit the content
 }
 
-// char *getln(){
-//     char *line = NULL, *tmp = NULL;
-//     size_t size = 0, index = 0;
-//     int ch = EOF;
+/* ****************************************************************************************** */
 
-//     while (ch) {
-//         ch = getc(stdin);
+int insertAtTheEnd(NODEPTR **start, char info){
+	NODEPTR *no_novo, *percorre;
 
-//         /* Check if we need to stop. */
-//         if (ch == EOF || ch == '\n')
-//             ch = 0;
+	/* Criacao do novo no - Aloca��o de memoria */
+	no_novo = (NODEPTR *) malloc(sizeof(NODEPTR));
+	no_novo->data = info;
+	no_novo->next = NULL;
 
-//         /* Check if we need to expand. */
-//         if (size <= index) {
-//             size += CHUNK;
-//             tmp = realloc(line, size);
-//             if (!tmp) {
-//                 free(line);
-//                 line = NULL;
-//                 break;
-//             }
-//             line = tmp;
-//         }
+	if (*start == NULL){ /* lista vazia. */
+		*start = no_novo;
+	}
+	else { /* lista nao vazia */
+		percorre = *start;
 
-//         /* Actually store the thing. */
-//         line[index++] = ch;
-//     }
+		while (percorre->next != NULL){
+			percorre = percorre->next;
+		}
+		percorre->next = no_novo;
+	}
 
-//     return line;
-// }
-
+	return 0;
+}
 
 /* ******************************* To Be Implemented Later ******************************* */
 
@@ -209,7 +192,7 @@ int editText(NODEPTR *ptr, char* value){
  * Function that searches for the received node via argument and returns
  * 1 if it has found and 0 if it has not found it.
  */
-int search(NODEPTR ptr, char* value){
+int search(NODEPTR **start, char* value){
 	return 0; //precisa retornar inteiro
 	// NODEPTR currentPtr = ptr;
 	// if(empty(ptr)){
@@ -229,8 +212,9 @@ int search(NODEPTR ptr, char* value){
 /*
  * Function that returns 1 if the list is empty and 0 if it is not.
  */
-int empty(NODEPTR ptr){
-	return ptr == NULL;
+int empty(NODEPTR **start){
+	*start = NULL;
+	return 0;
 }
 
 /*
