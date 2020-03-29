@@ -31,14 +31,14 @@ typedef struct Node{
 /*
  * Function headers
  */
-void menu(NODEPTR **List);
+void menu(NODEPTR **List); /* Main Menu */
 void clear(int **start, int end);
-void insertText(NODEPTR **start, char *value);
+void insertText(NODEPTR **start, char *value); /* Send the string got by the command line to the insertAtTheEnd function */
 int editText(NODEPTR **start, char* value);
 int print(NODEPTR *start);
-int insertAtTheEnd(NODEPTR **start, char info);
-int initList(NODEPTR **start);
-int empty(NODEPTR **start);
+int insertAtTheEnd(NODEPTR **start, char info); /* Receives a char and add it to the end of the list */
+int initList(NODEPTR **start); /* Start an empty list */
+int empty(NODEPTR **start); /* Checks if the list is empty */
 
 /* ****************************************************************************************** */
 
@@ -98,13 +98,15 @@ void insertText(NODEPTR **start, char *value){
 void menu(NODEPTR **List){
 	//TODO: needs to think a little bit of it and implement it
 	int option = 0;
+	int err = 0;
 	do{
 		printf("\n AWFUL TEXT EDITOR \n\n");
 		printf("Main Menu:\n");
-		printf("1- Insert Text\n");
-		printf("2- Edit Text\n");
-		printf("3- Delete Text\n");
-		printf("4- Print Content\n\n");
+		printf("1 - Insert Text\n");
+		printf("2 - Edit Text\n");
+		printf("3 - Delete Text\n");
+		printf("4 - Print Content\n\n");
+		printf("5 - Check whether the list is empty or not\n\n");
 		scanf("%d", &option);
 
 		switch(option){
@@ -120,6 +122,15 @@ void menu(NODEPTR **List){
 			case 4: 
 				printf("Selecionou opcao %d\n\n", option);
 				print(*List);
+				break;
+			case 5: 
+				printf("Selecionou opcao %d\n\n", option);
+				err = empty(&List);
+				if(err = 0){
+					printf("There is content saved in the list\n\n");
+				}else{
+					printf("The list is empty!\n\n");
+				}
 				break;
 			case 9: 
 				printf("Selecionou opcao %d\n\n", option);
@@ -213,8 +224,11 @@ int search(NODEPTR **start, char* value){
  * Function that returns 1 if the list is empty and 0 if it is not.
  */
 int empty(NODEPTR **start){
-	*start = NULL;
-	return 0;
+	if(*start == NULL){
+		return 1;
+	}else{
+		return 0;
+	}
 }
 
 /*
