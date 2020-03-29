@@ -41,7 +41,7 @@ void menu(NODEPTR *List);
 void clear(int start, int end);
 void insertText(NODEPTR *ptr, char* value);
 int editText(NODEPTR *List, char* value);
-int print(NODEPTR *start);
+int print(NODEPTR start);
 char *getln();
 
 /*
@@ -49,11 +49,12 @@ char *getln();
  */
 int main(int argc, char* argv[]){
 	NODEPTR *List = malloc(sizeof(NODEPTR));
-	//printf("\n\n\n %s \n\n\n", argv); //argv é vetor, precisa ser acessado internamente antes de ser impresso
 
+		printf("num de args: %d \n\n", argc);
 	if(argc != 1){
 		int args = argc-1, aux=1;
 		while(args != 0){
+			printf("arg: %s \n\n", argv[1]);
 			insertText(List, argv[aux]);
 			args--;
 			aux++;
@@ -75,13 +76,14 @@ int main(int argc, char* argv[]){
  */
 void insertText(NODEPTR *ptr, char* value){
 	NODEPTR newPtr;
+	printf("insertText: %s \n", value);
 	newPtr = malloc(sizeof(NODEPTR));
 	
 	/*
 	 * Code block that allocates a new node and fills it with the
 	 * arguments received.
 	 */
-	if(newPtr!=NULL){
+	if(newPtr != NULL){
 		strcpy(&newPtr->data, value);
 		newPtr->next = NULL;
 		newPtr->next = *ptr;
@@ -124,7 +126,7 @@ void menu(NODEPTR *List){
 				break;
 			case 4: 
 				printf("Selecionou opcao %d\n", option);
-				print(List);
+				print(*List);
 				break;
 			case 9: 
 				printf("Selecionou opcao %d\n", option);
@@ -138,22 +140,18 @@ void menu(NODEPTR *List){
 /*
  * Function that allows the list contents to be printed on screen.
  */
-int print(NODEPTR *start){
+int print(NODEPTR start){
 	printf("Executou print \n\n");
 
-	if (*start == NULL){
+	if (start == NULL){
 		return 1;  /* lista vazia */
 	}
 	printf("LISTA ::  ");
+//  && !strcmp((*start)->data, "\0"
+	while (start != NULL) {
 
-	while (*start != NULL) {
-		//printf("%c  ", (*start)->data);
-		int i = 0;
-		while(!strcmp(&start->data, "\0")){
-			printf("%c", (*start)->data[i]);
-			i++;
-		}
-		*start = (*start)->next;
+		printf("%c", start->data);		
+		start = start->next;
 	}
 
 	printf("\nChegou no final da func \n\n");
