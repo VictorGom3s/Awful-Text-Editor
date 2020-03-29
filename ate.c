@@ -105,7 +105,7 @@ void menu(NODEPTR **List){
 		printf("1 - Insert Text\n");
 		printf("2 - Edit Text\n");
 		printf("3 - Delete Text\n");
-		printf("4 - Print Content\n\n");
+		printf("4 - Print Content\n");
 		printf("5 - Check whether the list is empty or not\n\n");
 		scanf("%d", &option);
 
@@ -125,7 +125,7 @@ void menu(NODEPTR **List){
 				break;
 			case 5: 
 				printf("Selecionou opcao %d\n\n", option);
-				err = empty(&List);
+				err = empty(List);
 				if(err = 0){
 					printf("There is content saved in the list\n\n");
 				}else{
