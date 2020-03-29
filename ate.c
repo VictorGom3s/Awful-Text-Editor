@@ -31,14 +31,14 @@ typedef struct Node{
 /*
  * Function headers
  */
-void menu(NODEPTR **List); /* Main Menu */
-void clear(int **start, int end);
-void insertText(NODEPTR **start, char *value); /* Send the string got by the command line to the insertAtTheEnd function */
-int editText(NODEPTR **start, char* value);
-int print(NODEPTR *start);
-int insertAtTheEnd(NODEPTR **start, char info); /* Receives a char and add it to the end of the list */
 int initList(NODEPTR **start); /* Start an empty list */
+void menu(NODEPTR **List); /* Main Menu */
+void insertText(NODEPTR **start, char *value); /* Send the string got by the command line to the insertAtTheEnd function */
+int insertAtTheEnd(NODEPTR **start, char info); /* Receives a char and add it to the end of the list */
+int print(NODEPTR *start); /* Print the list content to the stdout */
 int empty(NODEPTR **start); /* Checks if the list is empty */
+int clear(NODEPTR **start);
+int editText(NODEPTR **start, char* value);
 
 /* ****************************************************************************************** */
 
@@ -100,40 +100,40 @@ void menu(NODEPTR **List){
 	int option = 0;
 	int err = 0;
 	do{
-		printf("\n AWFUL TEXT EDITOR \n\n");
+		printf("\nAWFUL TEXT EDITOR \n\n");
 		printf("Main Menu:\n");
 		printf("1 - Insert Text\n");
 		printf("2 - Edit Text\n");
 		printf("3 - Delete Text\n");
 		printf("4 - Print Content\n");
-		printf("5 - Check whether the list is empty or not\n\n");
+		printf("5 - Check whether the list is empty or not\n");
+		printf("6 - Clear list\n");
+		printf("9 - Exit\n\n");
 		scanf("%d", &option);
 
 		switch(option){
 			case 1: 
-				printf("Selecionou opcao %d\n\n", option);
 				break;
 			case 2: 
-				printf("Selecionou opcao %d\n\n", option);
 				break;
 			case 3: 
-				printf("Selecionou opcao %d\n\n", option);
 				break;
 			case 4: 
-				printf("Selecionou opcao %d\n\n", option);
 				print(*List);
 				break;
 			case 5: 
-				printf("Selecionou opcao %d\n\n", option);
 				err = empty(List);
-				if(err = 0){
-					printf("There is content saved in the list\n\n");
+				if(err == 0){
+					printf("::::> There is content saved in the list\n\n");
 				}else{
-					printf("The list is empty!\n\n");
+					printf("::::> The list is empty!\n\n");
 				}
 				break;
+			case 6: 
+				err = clear(List);
+				printf("::::> List cleared!\n\n");
+				break;
 			case 9: 
-				printf("Selecionou opcao %d\n\n", option);
 				return;
 				break;
 		}
@@ -161,8 +161,22 @@ int print(NODEPTR *start){
 /* ****************************************************************************************** */
 
 /* clears the entire list, deallocating pointers and memory. */
-void clear(int **start, int end){
-	//TODO: needs to think a little bit of it and implement it
+int clear(NODEPTR **start){
+	NODEPTR *percorre, *aux;
+	if(*start != NULL){
+		percorre = *start;
+		while (percorre != NULL){
+		aux = percorre;
+		percorre = percorre->next;
+		free(aux);
+		}
+
+		*start = NULL;
+		return 0;
+	}
+	else{
+	   return 1;
+	}
 }
 
 /* ****************************************************************************************** */
@@ -197,6 +211,17 @@ int insertAtTheEnd(NODEPTR **start, char info){
 	return 0;
 }
 
+/* ****************************************************************************************** */
+
+/* Returns 1 if the list is empty and 0 if it is not. */
+int empty(NODEPTR **start){
+	if(*start == NULL){
+		return 1;
+	}else{
+		return 0;
+	}
+}
+
 /* ******************************* To Be Implemented Later ******************************* */
 
 /*
@@ -218,17 +243,6 @@ int search(NODEPTR **start, char* value){
 	// else{
 	// 	return 0;
 	// }
-}
-
-/*
- * Function that returns 1 if the list is empty and 0 if it is not.
- */
-int empty(NODEPTR **start){
-	if(*start == NULL){
-		return 1;
-	}else{
-		return 0;
-	}
 }
 
 /*
