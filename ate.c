@@ -38,7 +38,8 @@ int insertAtTheEnd(NODEPTR **start, char info); /* Receives a char and add it to
 int print(NODEPTR *start); /* Print the list content to the stdout */
 int empty(NODEPTR **start); /* Checks if the list is empty */
 int clear(NODEPTR **start);
-int editText(NODEPTR **start, char* value);
+int editText(NODEPTR **start, char* value, int pos);
+int removeText(NODEPTR **start, int initialPos, int finalPos);
 
 /* ****************************************************************************************** */
 
@@ -113,10 +114,13 @@ void menu(NODEPTR **List){
 
 		switch(option){
 			case 1: 
+				/* Se der tempo, a gente faz pro usuario inserir texto a partir daqui tbm, se não, fica do jeito que está */			
 				break;
 			case 2: 
+				/*chamar editText */
 				break;
-			case 3: 
+			case 3:
+				/*chamar removeText */
 				break;
 			case 4: 
 				print(*List);
