@@ -46,9 +46,9 @@ int removeText(NODEPTR **start, int initialPos, int finalPos);
 int main(int argc, char* argv[]){
 	NODEPTR *List;
 
-	int erro = initList(&List);
-	if(erro != 0){
-		printf("Erro na inicialização!\n\n");
+	int error = initList(&List);
+	if(error != 0){
+		printf("Initialization error!\n\n");
 		exit(1);
 	}	
 
@@ -62,7 +62,8 @@ int main(int argc, char* argv[]){
 		menu(&List);
 	}
 	else{
-		printf("Incorrect usage\n\n");
+		printf("Incorrect usage\n\nPRESS ANY KEY TO EXIT");
+		getchar();
 	}			
 	return 0;
 }
@@ -80,11 +81,11 @@ int initList (NODEPTR **start){
  */
 void insertText(NODEPTR **start, char *value){
 	int i;
-	int erro;
+	int error;
 	for (i = 0; value[i] != '\0'; ++i){    
-		erro = insertAtTheEnd(start, value[i]);
-		if(erro > 0){
-			printf("Erro ao inserir caracter.\n\n");
+		error = insertAtTheEnd(start, value[i]);
+		if(error > 0){
+			printf("Character insertion error.\n\n");
 		}
 	}
 	char space = ' ';
@@ -150,7 +151,7 @@ void menu(NODEPTR **List){
 /* Allows the list content to be printed on screen. */
 int print(NODEPTR *start){
 	if (start == NULL){
-		printf("Lista vazia\n\n");
+		printf("Empty list\n\n");
 		return 1;  /* lista vazia */
 	}
 	printf("Content ::::>  ");
@@ -185,7 +186,7 @@ int clear(NODEPTR **start){
 
 /* ****************************************************************************************** */
 
-int editText(NODEPTR **start, char* value){
+int editText(NODEPTR **start, char* value, int pos){
 	return 0; //precisa retornar inteiro
 	//TODO: Choose a position on the list and edit the content
 }
