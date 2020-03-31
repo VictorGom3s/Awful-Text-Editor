@@ -215,7 +215,6 @@ int insertAtTheEnd(NODEPTR **start, char info){
 		}
 		percorre->next = no_novo;
 	}
-
 	return 0;
 }
 
