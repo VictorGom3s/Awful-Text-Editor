@@ -64,9 +64,9 @@ int main(int argc, char* argv[]){
 		menu(&List);
 	}
 	else{
-		printf("Incorrect usage\n\nPRESS ANY KEY TO EXIT");
+		printf("Incorrect usage - Please insert some text --> ./ate <text>\n\nPRESS ANY KEY TO EXIT");
 		getchar();
-	}			
+	}
 	return 0;
 }
 
@@ -108,8 +108,8 @@ void menu(NODEPTR **List){
 	do{
 		printf("\nAWFUL TEXT EDITOR \n\n");
 		printf("Main Menu:\n");
-		printf("1 - Insert Text\n");
-		printf("2 - Edit Text\n");
+		// printf("1 - Insert Text\n");
+		// printf("2 - Edit Text\n");
 		printf("3 - Delete Text\n");
 		printf("4 - Print Content\n");
 		printf("5 - Check whether the list is empty or not\n");
@@ -119,9 +119,11 @@ void menu(NODEPTR **List){
 
 		switch(option){
 			case 1: 
+				printf("Not implemented yet.\n\n");
 				/* Se der tempo, a gente faz pro usuario inserir texto a partir daqui tbm, se não, fica do jeito que está */			
 				break;
 			case 2: 
+				printf("Not implemented yet.\n\n");
 				/*chamar editText */
 				break;
 			case 3:
@@ -164,7 +166,7 @@ int print(NODEPTR *start){
 		printf("Empty list\n\n");
 		return 1;  /* lista vazia */
 	}
-	printf("Content ::::>  ");
+	printf("\n\nContent ::::>  ");
 	while (start != NULL) {
 		printf("%c", start->data);		
 		start = start->next;
@@ -231,12 +233,6 @@ int empty(NODEPTR **start){
 
 /* ****************************************************************************************** */
 
-int editText(NODEPTR **start, char* value, int pos){
-	return 0; //precisa retornar inteiro
-}
-
-/* ****************************************************************************************** */
-
 int removeText(NODEPTR **start, int initialPos, int finalPos){
 	NODEPTR *percorre = *start;
 
@@ -278,6 +274,12 @@ void getListLength(NODEPTR *start, int *size){
 }
 
 /* ******************************* To Be Implemented Later ******************************* */
+
+/* ****************************************************************************************** */
+
+int editText(NODEPTR **start, char* value, int pos){
+	return 0; //precisa retornar inteiro
+}
 
 /*
  * Function that searches for the received node via argument and returns
