@@ -40,6 +40,8 @@ int empty(NODEPTR **start); /* Checks if the list is empty */
 int clear(NODEPTR **start);
 int editText(NODEPTR **start, char* value, int pos);
 int removeText(NODEPTR **start, int initialPos, int finalPos);
+void getListLength(NODEPTR *start, int *size);
+void removeChar(NODEPTR **start, int position);
 
 /* ****************************************************************************************** */
 
@@ -101,6 +103,8 @@ void menu(NODEPTR **List){
 	//TODO: needs to think a little bit of it and implement it
 	int option = 0;
 	int err = 0;
+	int initialPos = 0;
+	int finalPos = 0;
 	do{
 		printf("\nAWFUL TEXT EDITOR \n\n");
 		printf("Main Menu:\n");
@@ -121,7 +125,13 @@ void menu(NODEPTR **List){
 				/*chamar editText */
 				break;
 			case 3:
-				/*chamar removeText */
+				/*chamar removeText */				
+				printf("\nDigite a posição inicial para remover: ");
+				scanf("%d", &initialPos);
+				printf("\nDigite a posição final para remover: ");
+				scanf("%d", &finalPos);
+
+				removeText(List, initialPos, finalPos);
 				break;
 			case 4: 
 				print(*List);
@@ -186,13 +196,6 @@ int clear(NODEPTR **start){
 
 /* ****************************************************************************************** */
 
-int editText(NODEPTR **start, char* value, int pos){
-	return 0; //precisa retornar inteiro
-	//TODO: Choose a position on the list and edit the content
-}
-
-/* ****************************************************************************************** */
-
 int insertAtTheEnd(NODEPTR **start, char info){
 	NODEPTR *no_novo, *percorre;
 
@@ -224,6 +227,54 @@ int empty(NODEPTR **start){
 		return 1;
 	}else{
 		return 0;
+	}
+}
+
+/* ****************************************************************************************** */
+
+int editText(NODEPTR **start, char* value, int pos){
+	return 0; //precisa retornar inteiro
+}
+
+/* ****************************************************************************************** */
+
+int removeText(NODEPTR **start, int initialPos, int finalPos){
+	NODEPTR *percorre = *start;
+
+	int listSize, position = 0;
+	getListLength(percorre, &listSize);
+
+	if(initialPos < 0 || finalPos > listSize || percorre == NULL){
+		return 1;
+	}else{
+		/* Reset the initial list*/
+		initList(start);
+
+		while(percorre->next != NULL){
+			if(position < initialPos || position > finalPos){
+				/* Insert each non-excluded char to the list again */
+				insertAtTheEnd(start, percorre->data);
+			}
+			percorre = percorre->next;
+			position++;
+		}
+	}
+}
+
+/* ****************************************************************************************** */
+
+void getListLength(NODEPTR *start, int *size){
+	NODEPTR *percorre;
+	*size = 0;
+	if(start != NULL){
+		percorre = start;
+		while (percorre != NULL){
+			(*size)++;
+			percorre = percorre->next;
+		}
+	}
+	else{
+		*size = 0;
 	}
 }
 
